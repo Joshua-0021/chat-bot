@@ -16,6 +16,7 @@ USER 1001
 
 EXPOSE 5005
 
-# Start Rasa server using the pre-trained models in the models/ folder
-CMD ["run", "-m", "models", "--enable-api", "--cors", "*", "--port", "5005", "--connector", "rest"]
+# Start Rasa server using the port assigned by Railway
+# We use sh -c to allow the $PORT environment variable to be expanded
+CMD ["sh", "-c", "rasa run -m models --enable-api --cors '*' --port ${PORT:-5005} --connector rest"]
 
