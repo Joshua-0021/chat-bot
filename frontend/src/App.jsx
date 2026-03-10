@@ -21,7 +21,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:5005/webhooks/rest/webhook",
+        "https://chat-bot-production-caba.up.railway.app/webhooks/rest/webhook",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -65,7 +65,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:5005/webhooks/rest/webhook",
+        "https://chat-bot-production-caba.up.railway.app/webhooks/rest/webhook",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -110,8 +110,8 @@ function App() {
   /* NEW FUNCTION ADDED */
   const handleClose = () => {
     setIsOpen(false);
-    setChat([]);     
-    setMessage("");  
+    setChat([]);
+    setMessage("");
   };
 
 
