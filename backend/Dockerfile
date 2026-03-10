@@ -14,6 +14,11 @@ RUN chown -R 1001:1001 /app
 # Switch back to non-root user for security
 USER 1001
 
+# Train a new model inside the Linux container
+# This guarantees cross-OS compatibility and prevents pickup/unpickle FileNotFoundError crashes
+RUN rm -rf models/*
+RUN rasa train
+
 EXPOSE 5005
 
 # Start Rasa server
