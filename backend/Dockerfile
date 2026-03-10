@@ -1,22 +1,21 @@
-# Rasa Main Server
-FROM python:3.10-slim
+# Use the official optimized Rasa image
+FROM rasa/rasa:3.6.20-full
 
+# Use root user to change permissions (Rasa image runs as user 1001 by default)
+USER root
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Copy all project files into /app
+COPY . /app
 
-# Copy all project files
-COPY . .
+# Ensure correct permissions
+RUN chown -R 1001:1001 /app
 
-# Install rasa
-RUN pip install --upgrade pip && pip install rasa==3.6.20
+# Switch back to non-root user for security
+USER 1001
 
-# Expose port
 EXPOSE 5005
 
 # Start Rasa server
-CMD ["rasa", "run", "-m", "models", "--enable-api", "--cors", "*", "--port", "5005", "--interface", "0.0.0.0"]
+CMD ["run", "-m", "models", "--enable-api", "--cors", "*", "--port", "5005"]
+
