@@ -11,16 +11,11 @@ COPY . /app
 # Ensure correct permissions
 RUN chown -R 1001:1001 /app
 
-# Train a new model inside the Linux container AS ROOT
-# This guarantees cross-OS compatibility and prevents pickup/unpickle FileNotFoundError crashes
-RUN rm -rf models/*
-RUN rasa train
-
 # Switch back to non-root user for security
 USER 1001
 
 EXPOSE 5005
 
-# Start Rasa server
-CMD ["run", "-m", "models", "--enable-api", "--cors", "*", "--port", "5005"]
+# Start Rasa server using the pre-trained models in the models/ folder
+CMD ["run", "-m", "models", "--enable-api", "--cors", "*", "--port", "5005", "--connector", "rest"]
 
