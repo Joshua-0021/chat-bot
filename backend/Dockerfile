@@ -22,7 +22,7 @@ EXPOSE 5005
 # Clear the rasa entrypoint to allow our command to run in a shell
 ENTRYPOINT []
 
-# Start Rasa server with 1 worker to save RAM
+# Start Rasa server using the port assigned by Railway
 # Shell form allows ${PORT} expansion
-CMD rasa run -m models --enable-api --cors "*" --port ${PORT:-5005} --connector rest --workers 1
+CMD rasa run -m models --enable-api --cors "*" --port ${PORT:-5005} --connector rest
 
