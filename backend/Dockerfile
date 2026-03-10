@@ -14,9 +14,11 @@ RUN chown -R 1001:1001 /app
 # Switch back to non-root user for security
 USER 1001
 
+# Optimization for low memory (Railway free tier 512MB)
+ENV PYTHONMALLOC=malloc
+
 EXPOSE 5005
 
-# Start Rasa server using the port assigned by Railway
-# We use sh -c to allow the $PORT environment variable to be expanded
-CMD ["sh", "-c", "rasa run -m models --enable-api --cors '*' --port ${PORT:-5005} --connector rest"]
+# Start Rasa server with 1 worker to save RAM
+CMD ["sh", "-c", "rasa run -m models --enable-api --cors '*' --port ${PORT:-5005} --connector rest --workers 1"]
 
